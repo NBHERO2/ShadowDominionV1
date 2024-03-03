@@ -8,10 +8,12 @@ public class PlayerState
     protected PlayerStateMachine playerStateMachine;
     protected PlayerData playerData;
 
+    protected bool isAnimationFinished;
+    protected bool isExitingState;
+
     protected float startTime;
     private string animBoolName;
     
-    //hàm tạo cho game
     public PlayerState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName)
     {
         this.player = player;
@@ -26,6 +28,8 @@ public class PlayerState
         DoChecks();
         player.Anim.SetBool(animBoolName, true);
         startTime = Time.time;
+        isAnimationFinished = false;
+        isExitingState = false;
         Debug.Log(animBoolName);
     }
 
@@ -33,6 +37,7 @@ public class PlayerState
     public virtual void Exit()
     {
         player.Anim.SetBool(animBoolName, false);
+        isExitingState = true;
     }
 
     // cap nhat logic game 
@@ -47,8 +52,10 @@ public class PlayerState
         DoChecks();
     }
     // check trang thai
-    public virtual void DoChecks()
-    {
+    public virtual void DoChecks() { }
 
-    }
+    public virtual void AnimationTrigger() { }
+
+    public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
+
 }

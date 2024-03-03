@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStateMachine // máy trình phát trạng tháy người chơi
+public class PlayerStateMachine 
 {
     public PlayerState currentState {  get; private set; }
 
-    public virtual void Initilize(PlayerState startingState) // trang thai khoi tao trinh phat
+    public virtual void Initilize(PlayerState startingState) 
     {
         currentState = startingState;
         currentState.Enter();
     }
 
-    public virtual void ChangeState (PlayerState newState) // thay doi trang thai
+    public virtual void ChangeState (PlayerState newState) 
     {
-        currentState.Exit(); // thoat trang thai cu
-        currentState = newState; // gan trang thai moi
-        currentState.Enter(); // bat dau  trang thai
+        currentState.Exit(); 
+        currentState = newState; 
+        currentState.Enter(); 
     }
-
-
 }
