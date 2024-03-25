@@ -10,6 +10,8 @@ public class PlayerInAirState : PlayerState
 
     private bool isTouchingWallBack;
 
+    private bool isTouchingLedge;
+
     private bool isGrounded;
 
     private bool jumpInput;
@@ -25,11 +27,19 @@ public class PlayerInAirState : PlayerState
         isGrounded = player.CheckIfTouchingGround();
         isTouchingWall = player.CheckIfTouchingWall();
         isTouchingWallBack = player.CheckIfTouchingWallBack();
+        isTouchingLedge = player.CheckIfTouchingLedge();
+
+        if (isTouchingWall && !isTouchingLedge)
+        {
+            player.LedgeClimbState.SetDetectedPosition(player.transform.position);
+        }
+
     }
 
     public override void Enter()
     {
         base.Enter();
+        
     }
 
     public override void Exit()
@@ -48,6 +58,10 @@ public class PlayerInAirState : PlayerState
         if (isGrounded && player.currentVelocity.y < 0.01f)
         {
             playerStateMachine.ChangeState(player.LandState);
+        }
+        else if (isTouchingWall && !isTouchingLedge)
+        {
+            playerStateMachine.ChangeState(player.LedgeClimbState);
         }
         else if (jumpInput && (isTouchingWall || isTouchingWallBack))
         {

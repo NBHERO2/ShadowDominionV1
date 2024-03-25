@@ -23,6 +23,10 @@ public class PlayerData : ScriptableObject
     [Header("Climb State")]
     public float ClimbVelocity = 3f;
 
+    [Header("Ledge Climb State")]
+    public Vector2 startOffSet;
+    public Vector2 stopOffSet;
+
     [Header("Check Variable")]
     public float groundCheckRadius = 0.3f;
     public float wallCheckDistance = 0.5f;
